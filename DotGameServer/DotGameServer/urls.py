@@ -13,13 +13,22 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path,include
-from GoCorgie import urls
+from datetime import datetime
+from django.urls import path, include
+from rest_framework import routers
 
-from rest_framework import urls
+router = routers.DefaultRouter(trailing_slash=False)
+
+# Uncomment the next lines to enable the admin:
+from django.conf.urls import include
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = [
+
+    path('', include('GoCorgie.urls')),
+
+    path('api/', include(router.urls)),
+
     path('admin/', admin.site.urls),
-    path('',include('GoCorgie.urls')),
 ]
